@@ -10,13 +10,10 @@ const Tasks = () => {
   const { selectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject);
+
   let projectName = "";
 
-  if (
-    projects.lenght > 0 &&
-    selectedProject &&
-    !collatedTasksExist(selectedProject)
-  ) {
+  if (projects && selectedProject && !collatedTasksExist(selectedProject)) {
     projectName = getTitle(projects, selectedProject).name;
   }
   if (collatedTasksExist(selectedProject) && selectedProject) {
@@ -25,6 +22,7 @@ const Tasks = () => {
   useEffect(() => {
     document.title = `${projectName}: TodoApp`;
   }, [projectName]);
+
   return (
     <div className="tasks">
       <h2>{projectName}</h2>

@@ -20,16 +20,14 @@ const AddTask = ({
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
   const [showTaskDate, setShowTaskDate] = useState(false);
   const { selectedProject } = useSelectedProjectValue();
-
   const addTask = async () => {
     const projectId = project || selectedProject;
     let collatedDate = "";
-    if (projectId === "today") {
+    if (projectId === "TODAY") {
       collatedDate = moment().format("DD/MM/YYYY");
     } else if (projectId === "NEXT_7_DAYS") {
       collatedDate = moment().add(7, "days").format("DD/MM/YYYY");
     }
-
     if (task && projectId) {
       await setDoc(doc(database, "tasks", uuidV4()), {
         archived: false,

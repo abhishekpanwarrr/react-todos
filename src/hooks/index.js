@@ -23,7 +23,7 @@ export const useTasks = (selectedProject) => {
           : selectedProject === "TODAY"
           ? (unsubscribe = query(
               collection(database, "tasks"),
-              where("date", "==", moment().format("DD?MM/YYYY"))
+              where("date", "==", moment().format("DD/MM/YYYY"))
             ))
           : selectedProject === "INBOX" || selectedProject === 0
           ? (unsubscribe = query(
@@ -74,6 +74,6 @@ export const useProjects = () => {
       }
     };
     getProjects();
-  }, [projects]);
+  }, []);
   return { projects, setProjects };
 };
