@@ -27,18 +27,17 @@ export const useTasks = (selectedProject) => {
             ))
           : selectedProject === "INBOX" || selectedProject === 0
           ? (unsubscribe = query(
-              collection(database, "tasks"),
-              where("date", "==", "")
+              collection(database, "tasks")
+              // where("date", "==", "")
             ))
           : unsubscribe;
 
       const querySnapshot = await getDocs(unsubscribe);
-      // console.log(querySnapshot.docs.);
       const newTasks = querySnapshot.docs.map((task) => ({
         id: task.id,
         ...task.data(),
       }));
-      // console.log(task);
+
       setTasks(
         selectedProject === "NEXT_7_DAYS"
           ? newTasks.filter(
@@ -74,6 +73,6 @@ export const useProjects = () => {
       }
     };
     getProjects();
-  }, []);
+  }, [projects]);
   return { projects, setProjects };
 };

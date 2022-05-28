@@ -9,19 +9,20 @@ import { useSelectedProjectValue } from "../../context";
 import AddProject from "../AddProject";
 import Projects from "../Projects";
 
-const Sidebar = () => {
+const Sidebar = ({ show, setShow }) => {
   const { setSelectedProject } = useSelectedProjectValue();
   const [active, setActive] = useState("inbox");
   const [showProjects, setShowProjects] = useState(true);
-
+  const width = window.innerWidth;
   return (
-    <div className="sidebar">
+    <div className={show ? "show" : "sidebar"}>
       <ul className="sidebar__generic">
         <li
           className={active === "inbox" ? "active" : undefined}
           onClick={() => {
             setActive("inbox");
             setSelectedProject("INBOX");
+            width < 600 && setShow((show) => !show);
           }}
         >
           <span>
@@ -34,6 +35,7 @@ const Sidebar = () => {
           onClick={() => {
             setActive("today");
             setSelectedProject("TODAY");
+            width < 600 && setShow((show) => !show);
           }}
         >
           <span>
@@ -46,6 +48,7 @@ const Sidebar = () => {
           onClick={() => {
             setActive("next_7");
             setSelectedProject("NEXT_7_DAYS");
+            width < 600 && setShow((show) => !show);
           }}
         >
           <span>
@@ -65,7 +68,9 @@ const Sidebar = () => {
         </span>
         <h2>Projects</h2>
       </div>
-      <ul className="sidebar__projects">{showProjects && <Projects />}</ul>
+      <ul className="sidebar__projects">
+        {showProjects && <Projects setShow={setShow} show={show} />}
+      </ul>
       {showProjects && <AddProject />}
     </div>
   );

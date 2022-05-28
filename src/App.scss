@@ -250,6 +250,11 @@ header {
   }
 }
 
+@media only screen and (min-width: 600px) {
+  .settings__darkmode {
+    display: none !important;
+  }
+}
 /* Sidebar
      ============================================ */
 .sidebar {
@@ -424,11 +429,20 @@ header {
     }
   }
 }
-
+.sidebar.show {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0px !important;
+  z-index: 11;
+  li {
+    font-size: 14px;
+  }
+}
 /* Show Confirm Delete
      ============================================ */
 .project-delete-modal {
   position: relative;
+  max-width: 300px !important;
 
   &__inner {
     @include box-overlay();
@@ -467,6 +481,7 @@ header {
   grid-template-columns: 1fr auto;
   max-width: 922px;
   margin: auto;
+  position: relative !important;
 }
 
 /* Tasks

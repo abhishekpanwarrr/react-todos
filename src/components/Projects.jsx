@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useProjectsValue, useSelectedProjectValue } from "../context";
 import IndividualProject from "./IndividualProject";
 
-const Projects = ({ activeNull = true }) => {
+const Projects = ({ activeNull = true, show, setShow }) => {
   const [active, setActive] = useState(activeNull);
   const { setSelectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
+  const width = window.innerWidth;
   return (
     projects &&
     projects.map((project) => (
@@ -19,6 +20,7 @@ const Projects = ({ activeNull = true }) => {
         onClick={() => {
           setActive(project.projectId);
           setSelectedProject(project.projectId);
+          width < 600 && setShow((show) => !show);
         }}
       >
         <IndividualProject project={project} />

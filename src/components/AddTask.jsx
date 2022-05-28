@@ -7,6 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import ProjectOverlay from "./ProjectOverlay";
 import TaskDate from "./TaskDate";
 import { v4 as uuidV4 } from "uuid";
+
 const AddTask = ({
   showAddTaskMain = true,
   showShouldMain = false,
@@ -19,7 +20,8 @@ const AddTask = ({
   const [showMain, setShowMain] = useState(showShouldMain);
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
   const [showTaskDate, setShowTaskDate] = useState(false);
-  const { selectedProject } = useSelectedProjectValue();
+  const { selectedProject, setSelectedProject } = useSelectedProjectValue();
+
   const addTask = async () => {
     const projectId = project || selectedProject;
     let collatedDate = "";
@@ -28,8 +30,9 @@ const AddTask = ({
     } else if (projectId === "NEXT_7_DAYS") {
       collatedDate = moment().add(7, "days").format("DD/MM/YYYY");
     }
+    const uniqueId = uuidV4();
     if (task && projectId) {
-      await setDoc(doc(database, "tasks", uuidV4()), {
+      await setDoc(doc(database, "tasks", uniqueId), {
         archived: false,
         projectId,
         task,
@@ -40,6 +43,9 @@ const AddTask = ({
       setProject("");
       setShowMain("");
       setShowProjectOverlay(false);
+      selectedProject === "INBOX"
+        ? setSelectedProject("TODAY")
+        : setSelectedProject("INBOX");
     }
   };
 

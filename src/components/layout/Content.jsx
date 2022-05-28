@@ -2,10 +2,10 @@ import React from "react";
 import Tasks from "../Tasks";
 import Sidebar from "./Sidebar";
 
-const Content = () => {
+const Content = ({ show, setShow }) => {
   return (
     <div className="content">
-      <Sidebar />
+      <Sidebar setShow={setShow} show={show} />
       <Tasks />
     </div>
   );
